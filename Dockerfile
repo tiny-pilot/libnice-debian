@@ -31,7 +31,7 @@ RUN git clone https://gitlab.freedesktop.org/libnice/libnice \
     ninja -C build && \
     ninja -C build install && \
     pwd && \
-    ls -l # DEBUG
+    ls # DEBUG
 
 ARG PKG_NAME="libnice10"
 ARG PKG_BUILD_NUMBER="1"
