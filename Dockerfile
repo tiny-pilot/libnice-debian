@@ -7,6 +7,8 @@ FROM debian:buster-20220418-slim AS build
 RUN set -x && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    gcc \
+    build-essential \
     dpkg-dev \
     git \
     wget \
