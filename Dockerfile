@@ -11,7 +11,6 @@ RUN set -x && \
     build-essential \
     dpkg-dev \
     git \
-    wget \
     python3-pip \
     cmake \
     pkg-config \
