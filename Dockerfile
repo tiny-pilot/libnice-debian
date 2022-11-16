@@ -4,13 +4,6 @@
 
 FROM debian:buster-20220418-slim AS build
 
-ARG PKG_NAME="libnice10"
-ARG PKG_VERSION="0.0.0"
-ARG PKG_BUILD_NUMBER="1"
-ARG PKG_ARCH="armhf"
-ARG PKG_ID="${PKG_NAME}_${PKG_VERSION}-${PKG_BUILD_NUMBER}_${PKG_ARCH}"
-ARG PKG_DIR="/releases/${PKG_ID}"
-
 RUN set -x && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -27,6 +20,8 @@ RUN set -x && \
 
 RUN pip3 install meson
 
+ARG PKG_VERSION="0.0.0"
+
 RUN mkdir -p "/usr/src/libnice"
 WORKDIR "/usr/src/libnice"
 RUN git clone https://gitlab.freedesktop.org/libnice/libnice \
@@ -37,6 +32,12 @@ RUN git clone https://gitlab.freedesktop.org/libnice/libnice \
     ninja -C build && \
     ninja -C build install
 
+ARG PKG_NAME="libnice10"
+ARG PKG_BUILD_NUMBER="1"
+ARG PKG_ARCH="armhf"
+ARG PKG_ID="${PKG_NAME}_${PKG_VERSION}-${PKG_BUILD_NUMBER}_${PKG_ARCH}"
+ARG PKG_DIR="/releases/${PKG_ID}"
+
 RUN mkdir --parents "${PKG_DIR}"
 
 # Copy compiled shared library into Debian package.
@@ -46,11 +47,11 @@ RUN cp \
     /usr/lib/arm-linux-gnueabihf/libnice.so* "${PKG_DIR}/"
 
 # Add copyright file.
-WORKDIR "${PKG_DIR}"
-RUN mkdir -p "usr/share/doc/${PKG_NAME}"
-COPY /usr/src/libnice/COPYING "usr/share/doc/${PKG_NAME}/copyright"
-COPY /usr/src/libnice/COPYING.LGPL "usr/share/doc/${PKG_NAME}/COPYING.LGPL"
-COPY /usr/src/libnice/COPYING.MPL "usr/share/doc/${PKG_NAME}/COPYING.MPL"
+RUN mkdir -p "${PKG_DIR}/usr/share/doc/${PKG_NAME}"
+WORKDIR "${PKG_DIR}/usr/share/doc/${PKG_NAME}"
+RUN cp /usr/src/libnice/COPYING copyright && \
+    cp /usr/src/libnice/COPYING.LGPL . && \
+    cp /usr/src/libnice/COPYING.MPL .
 
 WORKDIR "${PKG_DIR}/DEBIAN"
 
