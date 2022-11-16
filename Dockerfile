@@ -21,12 +21,10 @@ RUN pip3 install meson
 
 ARG PKG_VERSION="0.0.0"
 
-RUN mkdir -p "/usr/src/libnice"
-WORKDIR "/usr/src/libnice"
 RUN git clone https://gitlab.freedesktop.org/libnice/libnice \
         --branch "${PKG_VERSION}" \
-        --single-branch \
-        . && \
+        --single-branch && \
+    cd libnice && \
     meson --prefix=/usr build && \
     ninja -C build && \
     ninja -C build install
@@ -44,11 +42,10 @@ RUN cp --parents --no-dereference /usr/lib/arm-linux-gnueabihf/libnice.so* \
     "${PKG_DIR}/"
 
 # Add copyright file.
-WORKDIR "/releases/${PKG_ID}"
 RUN mkdir -p "usr/share/doc/${PKG_NAME}"
-COPY /usr/src/libnice/COPYING "usr/share/doc/${PKG_NAME}/copyright"
-COPY /usr/src/libnice/COPYING.LGPL "usr/share/doc/${PKG_NAME}/COPYING.LGPL"
-COPY /usr/src/libnice/COPYING.MPL "usr/share/doc/${PKG_NAME}/COPYING.MPL"
+COPY ./COPYING "usr/share/doc/${PKG_NAME}/copyright"
+COPY ./COPYING.LGPL "usr/share/doc/${PKG_NAME}/COPYING.LGPL"
+COPY ./COPYING.MPL "usr/share/doc/${PKG_NAME}/COPYING.MPL"
 
 WORKDIR "${PKG_DIR}/debian"
 
