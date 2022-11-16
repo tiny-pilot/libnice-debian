@@ -42,8 +42,8 @@ RUN mkdir --parents "${PKG_DIR}"
 
 # Copy headers to /usr/include.
 RUN mkdir -p "${PKG_DIR}/usr/include" && \
-    cp -R cp /usr/src/nice "${PKG_DIR}/usr/include/nice" && \
-    cp -R cp /usr/src/stun "${PKG_DIR}/usr/include/stun"
+    cp -R cp /usr/src/nice "${PKG_DIR}/usr/include/" && \
+    cp -R cp /usr/src/stun "${PKG_DIR}/usr/include/"
 
 # Copy compiled shared library into Debian package.
 RUN cp \
