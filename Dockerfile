@@ -33,6 +33,10 @@ RUN git clone https://gitlab.freedesktop.org/libnice/libnice \
     pwd && \
     ls # DEBUG
 
+# DEBUG
+RUN pwd
+RUN ls -l
+
 ARG PKG_NAME="libnice10"
 ARG PKG_BUILD_NUMBER="1"
 ARG PKG_ARCH="armhf"
