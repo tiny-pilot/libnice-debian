@@ -12,14 +12,14 @@ jobs:
           name: Run static analysis on bash scripts
           command: ./dev-scripts/check-bash
   build_deb_pkg:
-    docker:
-      - image: cimg/base:stable
+    # TODO: Go back to remote Docker builder
+    resource_class: large
+    machine:
+      image: ubuntu-2004:202010-01
     environment:
       PKG_VERSION: "0.1.18"
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.14
       - run:
           name: Enable multiarch builds with QEMU
           command: |
