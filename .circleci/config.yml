@@ -33,7 +33,6 @@ jobs:
           command: docker buildx inspect --bootstrap
       - run:
           name: Build docker image with .deb package
-          # TODO: Remove no-cache when finished debugging
           command: |
             docker buildx build \
               --platform linux/arm/v7 \
@@ -42,11 +41,10 @@ jobs:
               --target=artifact \
               --progress=plain \
               --output type=local,dest=$(pwd)/releases/ \
-              --no-cache \
               .
       - run:
           name: List contents of Debian package
-          command: dpkg --contents releases/janus*.deb
+          command: dpkg --contents releases/libnice*.deb
       - store_artifacts:
           path: releases
 workflows:
