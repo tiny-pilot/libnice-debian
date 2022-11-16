@@ -29,9 +29,7 @@ RUN git clone https://gitlab.freedesktop.org/libnice/libnice \
         . && \
     meson --prefix=/usr build && \
     ninja -C build && \
-    ninja -C build install && \
-    pwd && \
-    ls # DEBUG
+    ninja -C build install
 
 # DEBUG
 RUN pwd
