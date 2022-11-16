@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.11
+          version: 20.10.14
       - run:
           name: Enable multiarch builds with QEMU
           command: |
@@ -44,7 +44,7 @@ jobs:
               .
       - run:
           name: List contents of Debian package
-          command: dpkg --contents releases/janus*.deb
+          command: dpkg --contents releases/libnice*.deb
       - store_artifacts:
           path: releases
 workflows:
