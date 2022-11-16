@@ -46,6 +46,13 @@ RUN cp \
     --no-dereference \
     /usr/lib/arm-linux-gnueabihf/libnice.so* "${PKG_DIR}/"
 
+# Add copyright file.
+RUN mkdir -p "${PKG_DIR}/usr/share/doc/${PKG_NAME}"
+WORKDIR "${PKG_DIR}/usr/share/doc/${PKG_NAME}"
+RUN cp /usr/src/libnice/COPYING copyright && \
+    cp /usr/src/libnice/COPYING.LGPL . && \
+    cp /usr/src/libnice/COPYING.MPL .
+
 WORKDIR "${PKG_DIR}/DEBIAN"
 
 RUN cat > control <<EOF
