@@ -53,7 +53,7 @@ jobs:
               --target=artifact \
               --progress=plain \
               --output type=local,dest=$(pwd)/releases/ \
-              --no-cache
+              --no-cache \
               .
       - run:
           name: List contents of Debian package
